@@ -45,7 +45,11 @@ void Piezas::reset() {
  * Trying to drop a piece where it cannot be placed loses the player's turn
 **/ 
 Piece Piezas::dropPiece(int column) {
-  if (column < 0 || column >= 4/*board[0].size()*/) return Invalid;
+  if (column < 0 || column >= 4/*board[0].size()*/) {
+    if (turn == X) turn = O;
+    else turn = X;
+    return Invalid;
+  }
   unsigned int row;
   for (row = 0; row < board.size(); row++) {
     if (board[row][column] == Blank) {
@@ -79,5 +83,43 @@ Piece Piezas::pieceAt(int row, int column) {
  * line, it is a tie.
 **/
 Piece Piezas::gameState() {
-  return Invalid;
+  //check that the game is actually over
+  for (unsigned int row = 0; row < board.size(); row++) {
+    for (unsigned int col = 0; col < board[0].size(); col++) {
+      if (pieceAt(row, col) == Blank) return Invalid;
+    }
+  }
+
+  int max_X = 0, max_O = 0;
+  int cur_X = 0, cur_O = 0;
+  Piece last = Blank;
+  //find the maximum horizontal strand
+  for (unsigned int row = 0; row < board.size(); row++) {
+    for (unsigned int col = 0; col < board[0].size(); col++) {
+      if (pieceAt(row, col) == last) {
+        if (last == X) cur_X++;
+        else cur_O++;
+      }
+      last = pieceAt(row, col);
+    }
+    if (cur_O > max_O) max_O = cur_O;
+    cur_O = 0;
+    if (cur_X > max_X) max_X = cur_X;
+    cur_X = 0;
+  }
+  //find the maximum vertical strand
+  for (unsigned int col = 0; col < board[0].size(); col++) {
+    for (unsigned int row = 0; row < board.size(); row++) {
+      if (pieceAt(row, col) == last) {
+        if (last == X) cur_X++;
+        else cur_O++;
+      }
+      last = pieceAt(row, col);
+    }
+    if (cur_O > max_O) max_O = cur_O;
+    cur_O = 0;
+    if (cur_X > max_X) max_X = cur_X;
+    cur_X = 0;
+  }
+  return (max_X == max_O) ? Blank : (max_X > max_O) ? X : O;
 }
