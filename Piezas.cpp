@@ -41,7 +41,7 @@ void Piezas::reset() {
  * Trying to drop a piece where it cannot be placed loses the player's turn
 **/ 
 Piece Piezas::dropPiece(int column) {
-  if (column < 0 || column > board[0].size()) return Invalid;
+  if (column < 0 || column >= 4/*board[0].size()*/) return Invalid;
   unsigned int row;
   for (row = 0; row < board.size(); row++) {
     if (board[row][column] == Blank) {
@@ -60,7 +60,9 @@ Piece Piezas::dropPiece(int column) {
  * are no pieces there, or Invalid if the coordinates are out of bounds
 **/
 Piece Piezas::pieceAt(int row, int column) {
-  return Invalid;
+  if (row < 0 || row >= 3/*board.size()*/) return Invalid;
+  if (column < 0 || column >= 4/*board[0].size()*/) return Invalid;
+  return board[row][column];
 }
 
 /**
