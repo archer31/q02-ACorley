@@ -41,3 +41,15 @@ TEST(PiezasTest, dropPieceColumnFull) {
   pie.dropPiece(0);
   ASSERT_EQ((char)pie.dropPiece(0), ' ');
 }
+TEST(PiezasTest, dropPieceSwitchTurn) {
+  Piezas pie;
+  pie.dropPiece(0);
+  ASSERT_EQ((char)pie.dropPiece(0), 'O');
+}
+TEST(PiezasTest, dropPieceSwitchTurnBack) {
+  Piezas pie;
+  pie.dropPiece(0);
+  pie.dropPiece(0);
+  ASSERT_EQ((char)pie.dropPiece(0), 'X');
+}
+
