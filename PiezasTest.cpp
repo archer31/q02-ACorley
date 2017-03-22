@@ -52,4 +52,55 @@ TEST(PiezasTest, dropPieceSwitchTurnBack) {
   pie.dropPiece(0);
   ASSERT_EQ((char)pie.dropPiece(0), 'X');
 }
+TEST(PiezasTest, pieceAtInBoundsCorner) {
+  Piezas pie;
+  ASSERT_EQ((char)pie.pieceAt(0,0), ' ');
+}
+TEST(PiezasTest, pieceAtInBoundsBottomEdge) {
+  Piezas pie;
+  ASSERT_EQ((char)pie.pieceAt(0,1), ' ');
+}
+TEST(PiezasTest, pieceAtInBoundsSideEdge) {
+  Piezas pie;
+  ASSERT_EQ((char)pie.pieceAt(1,0), ' ');
+}
+TEST(PiezasTest, pieceAtOutOfBoundsCorner) {
+  Piezas pie;
+  ASSERT_EQ((char)pie.pieceAt(-1,-1), '?');
+}
+TEST(PiezasTest, pieceAtOutOfBoundsBottom) {
+  Piezas pie;
+  ASSERT_EQ((char)pie.pieceAt(0,-1), '?');
+}
+TEST(PiezasTest, pieceAtOutOfBoundsSide) {
+  Piezas pie;
+  ASSERT_EQ((char)pie.pieceAt(-1,0), '?');
+}
+TEST(PiezasTest, pieceAtOutOfBoundsAboveCorner) {
+  Piezas pie;
+  ASSERT_EQ((char)pie.pieceAt(4,5), '?');
+}
+TEST(PiezasTest, pieceAtOutOfBoundsAboveSide) {
+  Piezas pie;
+  ASSERT_EQ((char)pie.pieceAt(3,5), '?');
+}
+TEST(PiezasTest, pieceAtOutOfBoundsAboveTop) {
+  Piezas pie;
+  ASSERT_EQ((char)pie.pieceAt(4,4), '?');
+}
+TEST(PiezasTest, pieceAtMid) {
+  Piezas pie;
+  ASSERT_EQ((char)pie.pieceAt(2,2), ' ');
+}
+TEST(PiezasTest, pieceAtX) {
+  Piezas pie;
+  pie.dropPiece(0);
+  ASSERT_EQ((char)pie.pieceAt(0,0), 'X');
+}
+TEST(PiezasTest, pieceAtO) {
+  Piezas pie;
+  pie.dropPiece(0);
+  pie.dropPiece(0);
+  ASSERT_EQ((char)pie.pieceAt(1,0), 'O');
+}
 
