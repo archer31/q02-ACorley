@@ -29,7 +29,11 @@ Piezas::Piezas(): board(3, std::vector<Piece>(4, Blank)), turn(X) {
  * same size as previously specified
 **/
 void Piezas::reset() {
-
+  for (unsigned int row = 0; row < board.size(); row++) {
+    for (unsigned int column = 0; column < board[0].size(); column++) {
+      board[row][column] = Blank;
+    }
+  }
 }
 
 /**
