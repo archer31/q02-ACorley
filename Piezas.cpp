@@ -20,7 +20,7 @@
  * Constructor sets an empty board (default 3 rows, 4 columns) and 
  * specifies it is X's turn first
 **/
-Piezas::Piezas(): board(3, std::vector<Piece>(4)), turn(X) {
+Piezas::Piezas(): board(3, std::vector<Piece>(4, Blank)), turn(X) {
   
 }
 
@@ -41,7 +41,18 @@ void Piezas::reset() {
  * Trying to drop a piece where it cannot be placed loses the player's turn
 **/ 
 Piece Piezas::dropPiece(int column) {
-  return Invalid;
+  if (column < 0 || column > board[0].size()) return Invalid;
+  unsigned int row;
+  for (row = 0; row < board.size(); row++) {
+    if (board[row][column] == Blank) {
+      board[row][column] = turn;
+      break;
+    }
+  }
+  if (turn == X) turn = O;
+  else turn = X;
+  if (row < board.size()) return board[row][column];
+  return Blank;
 }
 
 /**
